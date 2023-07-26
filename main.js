@@ -1,33 +1,33 @@
 // Data Model
-var hexCodes = [];
-
-
-//querySelectors
-var colorButton = document.querySelector(".color-button");
 var colorBoxContainer = document.querySelector(".color-box-container");
+var colorButton = document.querySelector(".color-button");
+var currentPalette = [];
 
-
-// Event Listeners
+// DOM Event Listeners
 window.addEventListener("load", generateNewPalette);
 colorButton.addEventListener("click", generateNewPalette);
 
-//Functions
+// JavaScript Functions
 function generateRandomHexCode() {
-    var characters = "ABCDEF0123456789";
-    var hexCode = "#";
-    for (let i = 0; i < 6; i++) {
-      hexCode += characters[Math.floor(Math.random() * characters.length)];
-    }
-    return hexCode;
-  };
-
-  function () {
-
+  var characters = "0123456789ABCDEF";
+  var hexCode = "#";
+  for (let i = 0; i < 6; i++) {
+    hexCode += characters[Math.floor(Math.random() * characters.length)];
   }
+  return hexCode;
+};
 
-//querySelectors for button
-//add eventlistener
-//function/event handlers
-//array for color palette 
-//Questions: where do we get the colors? Ones that we come up with or random or does turing give it to us?
-//random function 
+function generateNewPalette() {
+  currentPalette = [];
+  colorBoxContainer.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    var randomHexCode = generateRandomHexCode();
+    currentPalette.push(randomHexCode);
+    colorBoxContainer.innerHTML += `
+      <article class="color-box">
+        <figure style="background-color: ${randomHexCode};"></figure>
+        <figcaption>${randomHexCode}</figcaption>
+      </article>
+    `;
+  }
+};
