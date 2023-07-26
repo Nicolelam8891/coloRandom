@@ -31,6 +31,7 @@ h1 {
 }
 
 figure {
+  position: relative;
   width: 150px;
   height: 150px;
   background-color: #ffffff;
@@ -44,15 +45,38 @@ figcaption {
   margin-top: 5px;
 }
 
+.lock-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Lock Icons */
+.unlocked-icon {
+  background-image: url('./assets/unlocked.png');
+}
+
+.locked-icon {
+  background-image: url('./assets/locked.png');
+  display: none;
+}
+
+/* Color Button */
 .color-button {
   width: 275px;
   height: 50px;
   background-color: #000000;
   color: #ffffff;
   font-size: 30px;
+  font-weight: 100;
   font-family: 'Poppins', sans-serif;
   font-weight: 100;
   border-radius: 0px 50px 0px 50px;
+  margin-top: 30px;
 }
 
 .color-button-container {
@@ -61,6 +85,7 @@ figcaption {
   margin-top: 125px;
 }
 
+/* Media Queries */
 @media only screen and (max-width: 768px) {
  main {
     display: flex;
