@@ -1,53 +1,60 @@
 // Data Model
-const currentPalette = [];
+var currentPalette = [];
 
 // DOM Query Selectors
-const colorBoxContainer = document.querySelector(".color-box-container");
-const colorButton = document.querySelector(".color-button");
+var colorBoxContainer = document.querySelector(".color-box-container");
+var colorButton = document.querySelector(".color-button");
 
 // DOM Event Listeners
 window.addEventListener("load", generateNewPalette);
 colorButton.addEventListener("click", generateNewPalette);
-colorBoxContainer.addEventListener('click', toggleLock);
+colorBoxContainer.addEventListener("click", toggleLock);
 
 // JavaScript Functions
 function generateRandomHexCode() {
-  const characters = "0123456789ABCDEF";
-  let hexCode = "#";
-  for (let i = 0; i < 6; i++) {
+  var characters = "0123456789ABCDEF";
+  var hexCode = "#";
+  for (var i = 0; i < 6; i++) {
     hexCode += characters[Math.floor(Math.random() * characters.length)];
   }
   return hexCode;
-}
+};
 
-function createColorBoxHTML(hexCode, locked) {
+function createColorBoxHTML(hexCode, locked, id) {
   return `
     <article class="color-box">
       <figure class="color-box-figure" style="background-color: ${hexCode}">
-        <div class="lock-icon ${locked ? 'locked-icon' : 'unlocked-icon'}"></div>
+        <figure class="lock-icon ${locked ? 'locked-icon' : 'unlocked-icon'}"></figure>
       </figure>
       <figcaption>${hexCode}</figcaption>
     </article>
-  `;
-}
+  `
+};
 
 function generateNewPalette() {
-  currentPalette.length = 0;
   colorBoxContainer.innerHTML = '';
-  for (let i = 0; i < 5; i++) {
-    const randomHexCode = generateRandomHexCode();
-    currentPalette.push({ hexCode: randomHexCode, locked: false, id: i });
-    colorBoxContainer.innerHTML += createColorBoxHTML(randomHexCode, false, i);
+  for (var i = 0; i < 5; i++) {
+    var randomHexCode = generateRandomHexCode();
+    var existingColor = currentPalette.find(function(color) {
+      return color.id === i;
+    });
+    if (existingColor && existingColor.locked) {
+      colorBoxContainer.innerHTML += createColorBoxHTML(existingColor.hexCode, true, i);
+      currentPalette[i] = existingColor;
+    } else {
+      currentPalette[i] = { hexCode: randomHexCode, locked: false, id: i };
+      colorBoxContainer.innerHTML += createColorBoxHTML(randomHexCode, false, i);
+    }
   }
-}
+};
 
 function toggleLock(event) {
-  const lockIcon = event.target;
+  var lockIcon = event.target;
   if (lockIcon.classList.contains('lock-icon')) {
-    const colorBox = lockIcon.closest('.color-box');
-    const colorBoxIndex = Array.from(colorBoxContainer.children).indexOf(colorBox);
+    var colorBox = lockIcon.closest('.color-box');
+    var colorBoxIndex = Array.from(colorBoxContainer.children).indexOf(colorBox);
     currentPalette[colorBoxIndex].locked = !currentPalette[colorBoxIndex].locked;
     lockIcon.classList.toggle('locked-icon');
     lockIcon.classList.toggle('unlocked-icon');
   }
-}
+};
