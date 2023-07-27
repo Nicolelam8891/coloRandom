@@ -15,7 +15,7 @@ function generateRandomHexCode() {
   var characters = "0123456789ABCDEF";
   var hexCode = "#";
   for (let i = 0; i < 6; i++) {
-    hexCode += characters[Math.floor(Math.random() * characters.length)];
+  hexCode += characters[Math.floor(Math.random() * characters.length)];
   }
   return hexCode;
 }
@@ -24,29 +24,33 @@ function generateNewPalette() {
   currentPalette = [];
   colorBoxContainer.innerHTML = '';
   for (let i = 0; i < 5; i++) {
-    var randomHexCode = generateRandomHexCode();
-    currentPalette.push({ hexCode: randomHexCode, locked: false });
-    colorBoxContainer.innerHTML += `
-      <article class="color-box">
-        <figure class="color-box${i + 1}" style="background-color: ${randomHexCode}">
-          <i class="lock-icon unlocked-icon"></i>
-          <i class="lock-icon locked-icon"></i>
-        </figure>
-        <figcaption>${randomHexCode}</figcaption>
-      </article>
-    `;
+  var randomHexCode = generateRandomHexCode();
+  currentPalette.push({ hexCode: randomHexCode, locked: false, id: i });
+  colorBoxContainer.innerHTML += `
+  <article class="color-box">
+    <figure class="color-box${i}" style="background-color: ${randomHexCode}">
+      <button>
+        <i class="lock-icon unlocked-icon" style="display:block"></i>
+        <i class="lock-icon locked-icon" style="display:none"></i>
+      </button>
+    </figure>
+    <figcaption>${randomHexCode}</figcaption>
+  </article>
+  `;
   }
 }
 
 function toggleLock(event) {
-  var icon = event.target;
-  if (icon.classList.contains('lock-icon')) {
-    var article = icon.closest('article');
-    var index = Array.from(colorBoxContainer.children).indexOf(article);
-    currentPalette[index].locked = !currentPalette[index].locked;
-    var lockedIcon = article.querySelector('.locked-icon');
-    var unlockedIcon = article.querySelector('.unlocked-icon');
-    unlockedIcon.classList.toggle('hidden');
-    lockedIcon.classList.toggle('hidden');
+  if (event.target.classList.contains('lock-icon')) {
+    const lock = event.target;
+    
+    // Toggle between locked and unlocked states
+    if (lock.classList.contains('unlocked-icon')) {
+      lock.classList.remove('unlocked-icon');
+      lock.classList.add('locked-icon');
+    } else if (lock.classList.contains('locked-icon')) {
+      lock.classList.remove('locked-icon');
+      lock.classList.add('unlocked-icon');
+    }
   }
 }
