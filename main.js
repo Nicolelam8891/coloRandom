@@ -9,15 +9,21 @@ var saveButton = document.querySelector(".save-button");
 var savedPalettesContainer = document.querySelector(".saved-palettes-container");
 var noSavedPalettesMsg = document.querySelector(".no-saved-palettes-msg");
 
-// DOM Event Listeners
+// Event Listeners
 window.addEventListener("load", function () {
   generateNewPalette();
-  displaySavedPalettes(); // To handle the initial state
+  displaySavedPalettes();
 });
 
 colorButton.addEventListener("click", generateNewPalette);
 saveButton.addEventListener("click", saveCurrentPalette);
 colorBoxContainer.addEventListener("click", toggleLock);
+savedPalettesContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("delete-palette")) {
+    var index = parseInt(event.target.dataset.index);
+    deleteSavedPalette(index);
+  }
+});
 
 // JavaScript Functions
 function generateRandomHexCode() {
@@ -33,7 +39,7 @@ function createColorBoxHTML(hexCode, locked, id) {
   return `
     <article class="color-box">
       <figure class="color-box-figure" style="background-color: ${hexCode}">
-        <figure class="lock-icon ${locked ? "locked-icon" : "unlocked-icon"}"></figure>
+        <aside class="lock-icon ${locked ? "locked-icon" : "unlocked-icon"}"></aside>
       </figure>
       <figcaption>${hexCode}</figcaption>
     </article>
@@ -85,20 +91,31 @@ function saveCurrentPalette() {
   displaySavedPalettes();
 }
 
+
 function displaySavedPalettes() {
   savedPalettesContainer.innerHTML = "";
-  savedPalettes.forEach(function (palette) {
-    var paletteHTML = '<div class="palette">';
+  savedPalettes.forEach(function (palette, index) {
+    var paletteHTML = `<li class="palette">`;
     palette.forEach(function (hexCode) {
-      paletteHTML += `<div class="mini-color-box" style="background-color: ${hexCode}"></div>`;
+      paletteHTML += `
+        <figure class="mini-color-box" style="background-color: ${hexCode}"></figure>
+      `;
     });
-    paletteHTML += "</div>";
+    paletteHTML += `
+      <button class="delete-palette" data-index="${index}"></button>
+    `;
+    paletteHTML += `</li>`;
     savedPalettesContainer.innerHTML += paletteHTML;
   });
 
-  if (savedPalettes.length === 0) {
+  if (!savedPalettes.length) {
     noSavedPalettesMsg.style.display = "block";
   } else {
     noSavedPalettesMsg.style.display = "none";
   }
+}
+
+function deleteSavedPalette(index) {
+  savedPalettes.splice(index, 1);
+  displaySavedPalettes();
 }
