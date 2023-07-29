@@ -13,6 +13,8 @@ Open up repository with your preferred text editor.
 ### Preview of App:
 [//]: <> (Provide ONE gif or screenshot of your application - choose the "coolest" piece of functionality to show off.)
 
+![image_720](https://github.com/Nicolelam8891/coloRandom/assets/132624450/4fe02d97-e03f-40b6-ab61-f6243193d3eb)
+
 ### Context:
 [//]: <> (Give some context for the project here. How long did you have to work on it? How far into the Turing program are you?)
 We worked collaboratively Tuesday-Saturday, everyday. We worked around 3-8h/day. 
