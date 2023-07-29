@@ -57,4 +57,3 @@ function toggleLock(event) {
     lockIcon.classList.toggle('locked-icon');
     lockIcon.classList.toggle('unlocked-icon');
   }
-};
