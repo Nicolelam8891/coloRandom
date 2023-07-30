@@ -45,7 +45,6 @@ function createColorBoxHTML(hexCode, locked, id) {
     </article>
   `;
 }
-
 function generateNewPalette() {
   colorBoxContainer.innerHTML = "";
   for (var i = 0; i < 5; i++) {
